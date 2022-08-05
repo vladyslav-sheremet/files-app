@@ -1,0 +1,31 @@
+.button {
+    width: 200px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    background-color: rgba(103, 105, 179, 1);
+    cursor: pointer;
+    color: #fff;
+    font-weight: 700;
+    border: 1px solid transparent;
+    transition: all .3s ease;
+}
+
+.button:hover {
+    background-color: rgba(103, 105, 179, .8);
+    border-color: rgba(255, 255, 255, .5);
+}
+
+.button.active {
+    border-color: rgba(255, 255, 255, .5);
+    background-color: rgba(138, 41, 177, .8);
+}
+
+@media (max-width: 475px) {
+    .button {
+      width: 100%;
+    }
+  }
