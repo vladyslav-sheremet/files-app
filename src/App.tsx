@@ -3,8 +3,8 @@ import { useCookies } from 'react-cookie'
 
 import { useFetchData } from './hooks/useFetchData'
 import { IFile } from './models'
-import { ErrorMessage } from './components/ErrorMessage'
-import { Loader } from './components/Loader'
+import { ErrorMessage } from './components/ErrorMessage/ErrorMessage'
+import { Loader } from './components/Loader/Loader'
 import { File } from './components/File/File'
 import { Button } from './components/Button/Button'
 
@@ -39,29 +39,31 @@ function App() {
 
   useEffect(() => {
     setData(
-    cookie === 'filteredDataSize' ? sortBySize
-      : cookie === 'filteredDataAtime' ? sortByAtime
-      : cookie === 'filteredDataMtime' ? sortByMtime
-      : cookie === 'filteredDataName' ? sortByName
-      : filesFolder
-      )
-}, [filesFolder])
+      cookie === 'filteredDataSize' ? sortBySize
+        : cookie === 'filteredDataAtime' ? sortByAtime
+          : cookie === 'filteredDataMtime' ? sortByMtime
+            : cookie === 'filteredDataName' ? sortByName
+              : filesFolder
+    )
+  }, [filesFolder])
 
-return (
-  <div className="container">
-    {error && <ErrorMessage error={error} />}
-    {loading && <Loader />}
-    <div className="buttons-wrapper">
-      <Button filteredDataHandler={filteredDataSize} text='Sort by Size' active={cookie === 'filteredDataSize'} />
-      <Button filteredDataHandler={filteredDataAtime} text='Sort by Creation Time' active={cookie === 'filteredDataAtime'} />
-      <Button filteredDataHandler={filteredDataMtime} text='Sort by Modification Time' active={cookie === 'filteredDataMtime'} />
-      <Button filteredDataHandler={filteredDataName} text='Sort by Name' active={cookie === 'filteredDataName'} />
+  return (
+    <div className="container">
+      {error && <ErrorMessage error={error} />}
+      <div className="buttons-wrapper">
+        <Button filteredDataHandler={filteredDataSize} text='Sort by Size' active={cookie === 'filteredDataSize'} />
+        <Button filteredDataHandler={filteredDataAtime} text='Sort by Creation Time' active={cookie === 'filteredDataAtime'} />
+        <Button filteredDataHandler={filteredDataMtime} text='Sort by Modification Time' active={cookie === 'filteredDataMtime'} />
+        <Button filteredDataHandler={filteredDataName} text='Sort by Name' active={cookie === 'filteredDataName'} />
+      </div>
+      {loading ? <Loader /> : (
+        <div className="files-wrapper">
+          {data.map(file => <File key={file.size + Math.random()} file={file} />)}
+        </div>
+      )}
+
     </div>
-    <div className="files-wrapper">
-      {data.map(file => <File key={file.size + Math.random()} file={file} />)}
-    </div>
-  </div>
-)
+  )
 }
 
 export default App;
